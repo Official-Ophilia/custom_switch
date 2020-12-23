@@ -1,4 +1,4 @@
-library custom_switch;
+library custom_switches;
 
 import 'package:flutter/material.dart';
 
