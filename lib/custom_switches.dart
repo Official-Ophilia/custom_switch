@@ -3,8 +3,13 @@ library custom_switches;
 import 'package:flutter/material.dart';
 
 class CustomSwitch extends StatefulWidget {
+  ///Intial Value that switch woould show
   final bool value;
+
+  ///CallBack that returns the new value that switch has
   final ValueChanged<bool> onChanged;
+
+  //Color of the Switch when it's calue is true
   final Color activeColor;
   final Color inactiveColor;
   final Color baseColor;
@@ -25,8 +30,10 @@ class CustomSwitch extends StatefulWidget {
 class _CustomSwitchState extends State<CustomSwitch>
     with SingleTickerProviderStateMixin {
   Animation<double> _animation;
+  ///Controller for Our Animation
   AnimationController _animationController;
-  double value = 0.0;
+  ///Stores the value that animation has at any particular time
+  double value;
 
   @override
   void initState() {
@@ -34,14 +41,10 @@ class _CustomSwitchState extends State<CustomSwitch>
     _animationController = AnimationController(
         vsync: this,
         duration: Duration(milliseconds: 80),
-        value: widget.value ? 1 : 0);
+        value: widget.value ? 1.0 : 0.0);
     _animation =
         CurvedAnimation(parent: _animationController, curve: Curves.easeInOut);
-    if (widget.value) {
-      setState(() {
-        value = 1;
-      });
-    }
+    value = widget.value ? 1.0 : 0.0;
     _animationController.addListener(() {
       setState(() {
         value = _animation.value;
@@ -101,5 +104,11 @@ class _CustomSwitchState extends State<CustomSwitch>
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 }
